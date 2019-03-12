@@ -1,5 +1,4 @@
-﻿using NeuralNetLIB.ActivationFunctions;
-using NeuralNetLIB.NetworkStructure;
+﻿using NeuralNetLIB.NetworkStructure;
 using System;
 using System.Threading.Tasks;
 
@@ -8,7 +7,6 @@ namespace NeuralNetLIB.LearningAlgorithms
     public class Genetics
     {
         //Store The Neural Net Data
-        public ActivationFunc ActivationFunc { get; private set; }
         public NeuralNetwork BestNetwork { get; private set; }
         private GeneticNeuralNetwork[] NeuralNets;
         public double BestNetworkFitness
@@ -24,26 +22,17 @@ namespace NeuralNetLIB.LearningAlgorithms
         public double MutationRate { get; private set; }
         public long GenerationCount { get; private set; }
 
-        public Genetics(Random rand, NeuralNetwork modelNetwork, int totalNetCount, double mutationRate = 0.05)
+        public Genetics(Random rand, NeuralNetwork modelNetwork, int populationCount, double mutationRate = 0.05)
         {
             //Store Neural Network Data
             Rand = rand;
             MutationRate = mutationRate;
-            ActivationFunc = modelNetwork.ActivationFunc;
 
             //Get Network Layer Neuron Counts
-            int[] neuronCounts = new int[modelNetwork.NeuralLayers.Length];
-            for (int i = 0; i < modelNetwork.NeuralLayers.Length; i++)
+            NeuralNets = new GeneticNeuralNetwork[populationCount];
+            for (int i = 0; i < populationCount; i++)
             {
-                neuronCounts[i] = modelNetwork.NeuralLayers[i].NeuronLength;
-            }
-
-            //Create Neural Nets
-            NeuralNets = new GeneticNeuralNetwork[totalNetCount];
-            for (int j = 0; j < totalNetCount; j++)
-            {
-                NeuralNets[j] = new GeneticNeuralNetwork(ActivationFunc, modelNetwork.ExpectedInputCount, neuronCounts);
-                NeuralNets[j].Randomize(rand);
+                NeuralNets[i] = new GeneticNeuralNetwork(modelNetwork);
             }
         }
 
@@ -60,7 +49,7 @@ namespace NeuralNetLIB.LearningAlgorithms
                 }
                 else
                 {
-                    CurrentNet.Randomize(Rand);
+                    CurrentNet.Initialize(Rand);
                 }
             }
 

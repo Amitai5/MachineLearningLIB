@@ -14,7 +14,7 @@ namespace NeuralNetLIB.LearningAlgorithms
         public double MomentumRate { get; private set; }
         public long EpochCount { get; private set; }
 
-        public Backpropagation(Random randy, NeuralNetwork neuralNetwork, double learningRate = 0.2, double momentumRate = 0.0125)
+        public Backpropagation(NeuralNetwork neuralNetwork, double learningRate = 0.2, double momentumRate = 0.0125)
         {
             EpochCount = 0;
             Network = neuralNetwork;
@@ -22,8 +22,8 @@ namespace NeuralNetLIB.LearningAlgorithms
             LearningRate = learningRate.Clamp(0, 1);
             Deltas = new Dictionary<Neuron, BackpropagationDelta>();
 
-            Network.Randomize(randy);
-            for (int l = 0; l < Network.NeuralLayers.Length; l++)
+            //Create Deltas
+            for (int l = 0; l < Network.NeuralLayers.Count; l++)
             {
                 NeuralLayer Layer = Network.NeuralLayers[l];
                 for (int n = 0; n < Layer.Neurons.Length; n++)
@@ -75,7 +75,7 @@ namespace NeuralNetLIB.LearningAlgorithms
             }
 
             //Hidden Layers
-            for (int i = 1; i < Network.NeuralLayers.Length; i++)
+            for (int i = 1; i < Network.NeuralLayers.Count; i++)
             {
                 NeuralLayer currLayer = Network.NeuralLayers[i];
                 NeuralLayer prevLayer = Network.NeuralLayers[i - 1];
@@ -103,7 +103,7 @@ namespace NeuralNetLIB.LearningAlgorithms
             }
 
             //Hidden Layers
-            for (int i = Network.NeuralLayers.Length - 2; i >= 0; i--)
+            for (int i = Network.NeuralLayers.Count - 2; i >= 0; i--)
             {
                 NeuralLayer CurrentLayer = Network.NeuralLayers[i];
                 NeuralLayer NextLayer = Network.NeuralLayers[i + 1];

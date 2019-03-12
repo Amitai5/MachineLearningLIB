@@ -10,15 +10,15 @@ namespace NeuralNetLIB.LearningAlgorithms
         //Save The Fitness
         public double Fitness { get; set; }
 
-        public GeneticNeuralNetwork(ActivationFunc activationFunc, int inputCount, params int[] neuronCounts)
-            : base(activationFunc, inputCount, neuronCounts)
+        public GeneticNeuralNetwork(NeuralNetwork neuralNetwork)
+            : base(neuralNetwork)
         {
             Fitness = Double.PositiveInfinity;
         }
 
         public void CrossOverAndMutate(GeneticNeuralNetwork BetterNetwork, double MutationRate, Random Rand)
         {
-            Parallel.For(0, NeuralLayers.Length, i =>
+            Parallel.For(0, NeuralLayers.Count, i =>
             {
                 //Cross Over The Neurons From Each Layer At Given Cut Off Point
                 int Flip = Rand.Next(2);
@@ -39,30 +39,31 @@ namespace NeuralNetLIB.LearningAlgorithms
                 //Mutate The Crossed Over Neurons
                 for (int j = 0; j < NeuralLayers[i].NeuronLength; j++)
                 {
+                    ActivationFunc activationFunc = NeuralLayers[i].ActivationFunc;
                     Neuron CurrentNeuron = NeuralLayers[i][j];
                     for (int h = 0; h < CurrentNeuron.InputDendrites.Length; h++)
                     {
                         if (Rand.NextDouble() < MutationRate)
                         {
-                            Mutate(ref CurrentNeuron.InputDendrites[h], Rand);
+                            Mutate(activationFunc, ref CurrentNeuron.InputDendrites[h], Rand);
                         }
                     }
 
                     //Mutate The Bias
                     if (Rand.NextDouble() < MutationRate)
                     {
-                        Mutate(ref CurrentNeuron.BiasValue, Rand);
+                        Mutate(activationFunc, ref CurrentNeuron.BiasValue, Rand);
                     }
                 }
             });
         }
 
-        private void Mutate(ref double weight, Random Rand)
+        private void Mutate(ActivationFunc activationFunc, ref double weight, Random Rand)
         {
             switch (Rand.Next(4))
             {
                 case 0: // randomize
-                    weight = Rand.NextDouble(ActivationFunc.DendriteMinGen, ActivationFunc.DendriteMaxGen);
+                    weight = Rand.NextDouble(activationFunc.DendriteMinGen, activationFunc.DendriteMaxGen);
                     break;
                 case 1: // add/subtract
                     weight += Rand.NextDouble(-1, 1);

@@ -1,4 +1,5 @@
 ﻿using NeuralNetLIB.ActivationFunctions;
+using NeuralNetLIB.InitializationFunctions;
 using System;
 using System.Diagnostics;
 
@@ -7,15 +8,17 @@ namespace NeuralNetLIB.NetworkStructure
     public class Neuron
     {
         public double BiasValue;
-        public double Output { get; private set; }
         public double Input { get; private set; }
+        public double Output { get; private set; }
         public double[] InputDendrites { get; private set; }
         public ActivationFunc ActivationFunc { get; private set; }
+        public InitializationFunction InitializationFunc { get; private set; }
 
-        public Neuron(ActivationFunc activationFunc, int inputCount)
+        public Neuron(ActivationFunc activationFunc, InitializationFunction initializationFunction, int inputCount)
         {
             ActivationFunc = activationFunc;
             InputDendrites = new double[inputCount];
+            InitializationFunc = initializationFunction;
         }
 
         [Conditional("DEBUG")]
@@ -43,16 +46,17 @@ namespace NeuralNetLIB.NetworkStructure
             return Output;
         }
 
-        public void Randomize(Random Rand)
+        public void InitializeDendrites(Random Rand)
         {
-            BiasValue = Rand.NextDouble(ActivationFunc.DendriteMinGen, ActivationFunc.DendriteMaxGen);
+            Func<ActivationFunc, Random, double> InitializeFunc = DendriteInitialization.GetInitFunction(InitializationFunc);
+            BiasValue = InitializeFunc(ActivationFunc, Rand);
 
             //Check Before We Randomize
             if (InputDendrites != null && InputDendrites.Length > 0)
             {
                 for (int i = 0; i < InputDendrites.Length; i++)
                 {
-                    InputDendrites[i] = Rand.NextDouble(ActivationFunc.DendriteMinGen, ActivationFunc.DendriteMaxGen);
+                    InputDendrites[i] = InitializeFunc(ActivationFunc, Rand);
                 }
             }
         }

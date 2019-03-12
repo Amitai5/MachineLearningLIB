@@ -1,4 +1,5 @@
 ﻿using NeuralNetLIB.ActivationFunctions;
+using NeuralNetLIB.InitializationFunctions;
 using System;
 
 namespace NeuralNetLIB.NetworkStructure
@@ -27,16 +28,18 @@ namespace NeuralNetLIB.NetworkStructure
         public Neuron[] Neurons { get; private set; }
         public int NeuronLength { get => Neurons.Length; }
         public ActivationFunc ActivationFunc { get; private set; }
+        public InitializationFunction InitializationFunc { get; private set; }
 
-        public NeuralLayer(ActivationFunc activationFunc, int inputCount, int neuronCount)
+        public NeuralLayer(ActivationFunc activationFunc, InitializationFunction initializationFunction, int inputCount, int neuronCount)
         {
             ActivationFunc = activationFunc;
             Neurons = new Neuron[neuronCount];
+            InitializationFunc = initializationFunction;
 
             //Create The Neurons
             for (int i = 0; i < neuronCount; i++)
             {
-                Neurons[i] = new Neuron(ActivationFunc, inputCount);
+                Neurons[i] = new Neuron(activationFunc, initializationFunction, inputCount);
             }
         }
 
@@ -48,11 +51,11 @@ namespace NeuralNetLIB.NetworkStructure
             }
             return Outputs;
         }
-        public void Randomize(Random Rand)
+        public void Initialize(Random Rand)
         {
             for (int i = 0; i < Neurons.Length; i++)
             {
-                Neurons[i].Randomize(Rand);
+                Neurons[i].InitializeDendrites(Rand);
             }
         }
     }
