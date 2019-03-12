@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NeuralNetLIB.ActivationFunctions
+namespace MachineLearningLIB.ActivationFunctions
 {
     public class SoftSine : ActivationFunc
     {

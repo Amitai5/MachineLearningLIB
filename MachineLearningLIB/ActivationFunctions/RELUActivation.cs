@@ -1,4 +1,4 @@
-﻿namespace NeuralNetLIB.ActivationFunctions
+﻿namespace MachineLearningLIB.ActivationFunctions
 {
     public class ReLU : ActivationFunc
     {

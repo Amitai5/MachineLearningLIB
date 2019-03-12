@@ -1,8 +1,8 @@
-﻿using NeuralNetLIB.NetworkStructure;
+﻿using MachineLearningLIB.NetworkStructure;
 using System;
 using System.Threading.Tasks;
 
-namespace NeuralNetLIB.LearningAlgorithms
+namespace MachineLearningLIB.LearningAlgorithms
 {
     public class Genetics
     {

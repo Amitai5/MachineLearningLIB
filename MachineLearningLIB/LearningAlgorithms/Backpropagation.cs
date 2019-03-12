@@ -1,10 +1,10 @@
-﻿using NeuralNetLIB.NetworkStructure;
+﻿using MachineLearningLIB.NetworkStructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NeuralNetLIB.LearningAlgorithms
+namespace MachineLearningLIB.LearningAlgorithms
 {
     public class Backpropagation
     {

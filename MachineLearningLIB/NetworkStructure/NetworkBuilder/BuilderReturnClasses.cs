@@ -1,7 +1,7 @@
-﻿using NeuralNetLIB.ActivationFunctions;
+﻿using MachineLearningLIB.ActivationFunctions;
 using System;
 
-namespace NeuralNetLIB.NetworkStructure.NetworkBuilder
+namespace MachineLearningLIB.NetworkStructure.NetworkBuilder
 {
     public interface INeuralNetworkStartBuild
     {

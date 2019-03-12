@@ -1,9 +1,9 @@
-﻿using NeuralNetLIB.ActivationFunctions;
-using NeuralNetLIB.NetworkStructure;
+﻿using MachineLearningLIB.ActivationFunctions;
+using MachineLearningLIB.NetworkStructure;
 using System;
 using System.Threading.Tasks;
 
-namespace NeuralNetLIB.LearningAlgorithms
+namespace MachineLearningLIB.LearningAlgorithms
 {
     public class GeneticNeuralNetwork : NeuralNetwork
     {

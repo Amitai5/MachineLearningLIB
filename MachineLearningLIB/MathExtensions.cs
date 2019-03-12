@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NeuralNetLIB
+namespace MachineLearningLIB
 {
     public static class MathExtensions
     {

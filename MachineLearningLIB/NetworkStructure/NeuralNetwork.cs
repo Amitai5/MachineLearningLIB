@@ -1,9 +1,9 @@
-﻿using NeuralNetLIB.ActivationFunctions;
-using NeuralNetLIB.InitializationFunctions;
+﻿using MachineLearningLIB.ActivationFunctions;
+using MachineLearningLIB.InitializationFunctions;
 using System;
 using System.Collections.Generic;
 
-namespace NeuralNetLIB.NetworkStructure
+namespace MachineLearningLIB.NetworkStructure
 {
     public class NeuralNetwork
     {

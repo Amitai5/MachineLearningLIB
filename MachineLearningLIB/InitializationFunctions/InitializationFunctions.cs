@@ -1,4 +1,4 @@
-﻿namespace NeuralNetLIB.InitializationFunctions
+﻿namespace MachineLearningLIB.InitializationFunctions
 {
     public enum InitializationFunction
     {

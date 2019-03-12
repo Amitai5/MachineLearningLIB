@@ -1,7 +1,7 @@
-﻿using NeuralNetLIB.ActivationFunctions;
+﻿using MachineLearningLIB.ActivationFunctions;
 using System;
 
-namespace NeuralNetLIB.InitializationFunctions
+namespace MachineLearningLIB.InitializationFunctions
 {
     public class DendriteInitialization
     {

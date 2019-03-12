@@ -1,4 +1,4 @@
-﻿namespace NeuralNetLIB.LearningAlgorithms
+﻿namespace MachineLearningLIB.LearningAlgorithms
 {
     public class BackpropagationDelta
     {
