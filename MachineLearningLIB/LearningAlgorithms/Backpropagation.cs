@@ -8,11 +8,11 @@ namespace MachineLearningLIB.LearningAlgorithms
 {
     public class Backpropagation
     {
-        private readonly Dictionary<Neuron, BackpropagationDelta> Deltas;
-        public NeuralNetwork Network { get; private set; }
-        public double LearningRate { get; private set; }
-        public double MomentumRate { get; private set; }
+        public double LearningRate { get; }
+        public double MomentumRate { get; }
+        public NeuralNetwork Network { get; }
         public long EpochCount { get; private set; }
+        private readonly Dictionary<Neuron, BackpropagationDelta> Deltas;
 
         public Backpropagation(NeuralNetwork neuralNetwork, double learningRate = 0.2, double momentumRate = 0.0125)
         {

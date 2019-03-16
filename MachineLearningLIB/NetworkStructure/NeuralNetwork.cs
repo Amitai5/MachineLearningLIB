@@ -14,10 +14,10 @@ namespace MachineLearningLIB.NetworkStructure
                 return NeuralLayers[i];
             }
         }
-        public int ExpectedInputCount { get; private set; }
+        public int ExpectedInputCount { get; }
+        public List<NeuralLayer> NeuralLayers { get; }
         public int LayerCount { get => NeuralLayers.Count + 1; }
-        public List<NeuralLayer> NeuralLayers { get; private set; }
-        public InitializationFunction InitializationFunc { get; private set; }
+        public InitializationFunction InitializationFunc { get; }
         public NeuralLayer OutputLayer => NeuralLayers[NeuralLayers.Count - 1];
 
         public NeuralNetwork(NeuralNetwork modelNetwork)

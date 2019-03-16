@@ -8,11 +8,11 @@ namespace MachineLearningLIB.NetworkStructure
     public class Neuron
     {
         public double BiasValue;
+        public double[] InputDendrites { get; }
         public double Input { get; private set; }
         public double Output { get; private set; }
-        public double[] InputDendrites { get; private set; }
-        public ActivationFunc ActivationFunc { get; private set; }
-        public InitializationFunction InitializationFunc { get; private set; }
+        public ActivationFunc ActivationFunc { get; }
+        public InitializationFunction InitializationFunc { get; }
 
         public Neuron(ActivationFunc activationFunc, InitializationFunction initializationFunction, int inputCount)
         {

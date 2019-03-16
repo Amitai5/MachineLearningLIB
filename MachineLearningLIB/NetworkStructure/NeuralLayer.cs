@@ -25,10 +25,10 @@ namespace MachineLearningLIB.NetworkStructure
                 return Neurons[i];
             }
         }
-        public Neuron[] Neurons { get; private set; }
+        public Neuron[] Neurons { get; }
+        public ActivationFunc ActivationFunc { get; }
         public int NeuronLength { get => Neurons.Length; }
-        public ActivationFunc ActivationFunc { get; private set; }
-        public InitializationFunction InitializationFunc { get; private set; }
+        public InitializationFunction InitializationFunc { get; }
 
         public NeuralLayer(ActivationFunc activationFunc, InitializationFunction initializationFunction, int inputCount, int neuronCount)
         {

@@ -3,7 +3,7 @@ using System;
 
 namespace MachineLearningLIB.InitializationFunctions
 {
-    public class DendriteInitialization
+    public static class DendriteInitialization
     {
         public static Func<ActivationFunc, Random, double> GetInitFunction(InitializationFunction initializationFunction)
         {

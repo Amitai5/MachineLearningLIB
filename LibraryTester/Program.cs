@@ -1,17 +1,18 @@
 ﻿using MachineLearningLIB.ActivationFunctions;
 using MachineLearningLIB.InitializationFunctions;
 using MachineLearningLIB.LearningAlgorithms;
+using MachineLearningLIB.NetworkBuilder;
 using MachineLearningLIB.NetworkStructure;
-using MachineLearningLIB.NetworkStructure.NetworkBuilder;
 using System;
 
 namespace LibraryTester
 {
-    class Program
+    static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            NeuralNetwork Network = new NeuralNetworkBuilder(InitializationFunction.Random)
+            NeuralNetwork Network = NeuralNetworkBuilder.StartBuild()
+                .SetInitMethod(InitializationFunction.Random)
                 .CreateInputLayer(2)
                 .AddHiddenLayer(2, new Sigmoid())
                 .CreateOutputLayer(1, new Sigmoid())

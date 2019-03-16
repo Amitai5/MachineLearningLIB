@@ -2,11 +2,11 @@
 {
     public class BackpropagationDelta
     {
-        public double[] LastWeightUpdates;
-        public double PartialDerivative;
-        public double[] WeightUpdates;
-        public double[] Momentums;
         public double BiasUpdate;
+        public double[] Momentums;
+        public double[] WeightUpdates;
+        public double PartialDerivative;
+        public double[] LastWeightUpdates;
 
         public BackpropagationDelta(int numberOfWeights)
         {

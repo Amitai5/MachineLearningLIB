@@ -7,33 +7,23 @@ namespace MachineLearningLIB.LearningAlgorithms
     public class Genetics
     {
         //Store The Neural Net Data
+        private readonly GeneticNeuralNetwork[] NeuralNets;
         public NeuralNetwork BestNetwork { get; private set; }
-        private GeneticNeuralNetwork[] NeuralNets;
-        public double BestNetworkFitness
-        {
-            get
-            {
-                return NeuralNets[0].Fitness;
-            }
-        }
+        public double BestNetworkFitness => NeuralNets[0].Fitness;
 
         //Store The Training Data
-        public Random Rand { get; private set; }
-        public double MutationRate { get; private set; }
+        public Random Rand { get; }
+        public double MutationRate { get; }
         public long GenerationCount { get; private set; }
 
-        public Genetics(Random rand, NeuralNetwork modelNetwork, int populationCount, double mutationRate = 0.05)
+        public Genetics(Random rand, GeneticNeuralNetwork[] geneticNetworkPopulation, double mutationRate = 0.05)
         {
             //Store Neural Network Data
             Rand = rand;
             MutationRate = mutationRate;
 
-            //Get Network Layer Neuron Counts
-            NeuralNets = new GeneticNeuralNetwork[populationCount];
-            for (int i = 0; i < populationCount; i++)
-            {
-                NeuralNets[i] = new GeneticNeuralNetwork(modelNetwork);
-            }
+            //Store The Neural Networks
+            NeuralNets = geneticNetworkPopulation;
         }
 
         public void TrainGeneration(double[][] inputs, double[][] outputs)
@@ -54,10 +44,7 @@ namespace MachineLearningLIB.LearningAlgorithms
             }
 
             //Calculate Fitnesses & Sort
-            Parallel.For(0, NeuralNets.Length, j =>
-            {
-                CalculateFitness(NeuralNets[j], inputs, outputs);
-            });
+            Parallel.For(0, NeuralNets.Length, j => CalculateFitness(NeuralNets[j], inputs, outputs));
             Array.Sort(NeuralNets, (a, b) => a.Fitness.CompareTo(b.Fitness));
             BestNetwork = NeuralNets[0];
             GenerationCount++;

@@ -71,8 +71,8 @@ namespace MachineLearningLIB.LearningAlgorithms
                 case 2: // flip sign
                     weight *= -1;
                     break;
-                default:
-                case 3: // scale
+                case 3:
+                default: // scale
                     weight *= Rand.NextDouble(0.5, 1.5);
                     break;
             }

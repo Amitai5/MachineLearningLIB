@@ -11,7 +11,7 @@ namespace MachineLearningLIB
 
         public static double NextDouble(this Random RandGen, double min, double max)
         {
-            return RandGen.NextDouble() * (max - min) + min;
+            return (RandGen.NextDouble() * (max - min)) + min;
         }
     }
 }
