@@ -38,7 +38,7 @@ namespace LibraryTester
             Backpropagation Backprop = new Backpropagation(Network);
             while (Backprop.EpochCount < 8000)
             {
-                Error = Backprop.TrainEpoch(TestDataInputs, TestDataOutputs);
+                Error = Backprop.TrainEpoch(TestDataInputs, TestDataOutputs, TestDataInputs, TestDataOutputs);
             }
         }
     }

@@ -26,7 +26,7 @@ namespace MachineLearningLIB.LearningAlgorithms
             NeuralNets = geneticNetworkPopulation;
         }
 
-        public void TrainGeneration(double[][] inputs, double[][] outputs)
+        public void TrainGeneration(double[][] trainingDataInputs, double[][] trainingDataOutputs)
         {
             //Cross Over 80% Of Nets & Randomize 10%
             int OneTenthPopulation = NeuralNets.Length / 10;
@@ -44,7 +44,7 @@ namespace MachineLearningLIB.LearningAlgorithms
             }
 
             //Calculate Fitnesses & Sort
-            Parallel.For(0, NeuralNets.Length, j => CalculateFitness(NeuralNets[j], inputs, outputs));
+            Parallel.For(0, NeuralNets.Length, j => CalculateFitness(NeuralNets[j], trainingDataInputs, trainingDataOutputs));
             Array.Sort(NeuralNets, (a, b) => a.Fitness.CompareTo(b.Fitness));
             BestNetwork = NeuralNets[0];
             GenerationCount++;

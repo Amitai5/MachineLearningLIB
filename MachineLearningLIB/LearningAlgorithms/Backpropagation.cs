@@ -129,26 +129,26 @@ namespace MachineLearningLIB.LearningAlgorithms
             CalculateError(desiredOutput);
             CalculateUpdates(input);
         }
-        public double TrainEpoch(double[][] inputs, double[][] desiredOutputs)
+        public double TrainEpoch(double[][] trainingDataInputs, double[][] trainingDataOutputs, double[][] testingDataInputs, double[][] testingDataOutputs)
         {
             //Increase Epoch Count
             EpochCount++;
 
             ClearUpdates();
-            for (int i = 0; i < inputs.Length; i++)
+            for (int i = 0; i < trainingDataInputs.Length; i++)
             {
-                Train(inputs[i], desiredOutputs[i]);
+                Train(trainingDataInputs[i], trainingDataOutputs[i]);
             }
             ApplyUpdates();
 
             //Calculate And Return The Error
             double MeanSquaredError = 0;
-            for (int i = 0; i < inputs.Length; i++)
+            for (int i = 0; i < testingDataInputs.Length; i++)
             {
-                double[] Output = Network.Compute(inputs[i]);
-                MeanSquaredError += desiredOutputs[i].Zip(Output, (e, a) => Math.Pow(e - a, 2)).Average();
+                double[] Output = Network.Compute(testingDataInputs[i]);
+                MeanSquaredError += testingDataOutputs[i].Zip(Output, (e, a) => Math.Pow(e - a, 2)).Average();
             }
-            MeanSquaredError /= inputs.Length;
+            MeanSquaredError /= testingDataInputs.Length;
             return MeanSquaredError;
         }
     }
