@@ -6,56 +6,66 @@ namespace MachineLearningLIB.NetworkStructure
 {
     public class NeuralLayer
     {
-        public double[] Outputs
-        {
-            get
-            {
-                double[] outputs = new double[Neurons.Length];
-                for (int i = 0; i < Neurons.Length; i++)
-                {
-                    outputs[i] = Neurons[i].Output;
-                }
-                return outputs;
-            }
-        }
-        public Neuron this[int i]
-        {
-            get
-            {
-                return Neurons[i];
-            }
-        }
-        public Neuron[] Neurons { get; }
+        private readonly Tensor biasWeights;
+        private readonly Tensor neuronWeights;
+
+        public long NeuronCount { get; }
         public ActivationFunc ActivationFunc { get; }
-        public int NeuronLength { get => Neurons.Length; }
         public InitializationFunction InitializationFunc { get; }
 
-        public NeuralLayer(ActivationFunc activationFunc, InitializationFunction initializationFunction, int inputCount, int neuronCount)
+        public NeuralLayer(ActivationFunc activationFunc, InitializationFunction initFunc, long inputCount, long neuronCount)
         {
+            //Set layer globals
+            NeuronCount = neuronCount;
+            InitializationFunc = initFunc;
             ActivationFunc = activationFunc;
-            Neurons = new Neuron[neuronCount];
-            InitializationFunc = initializationFunction;
 
-            //Create The Neurons
-            for (int i = 0; i < neuronCount; i++)
+            //Initialize neuron weight matrix values
+            double[,] weightValues = new double[neuronCount, inputCount];
+
+            //Initialize neuron bias matrix values
+            double[,] biasValues = new double[neuronCount, weightValues.GetLength(1)];
+
+            //Create tensors
+            biasWeights = new Tensor(biasValues, false);
+            neuronWeights = new Tensor(weightValues, false);
+        }
+
+        public Tensor Compute(Tensor inputs)
+        {
+            Tensor temp = (neuronWeights * inputs) + biasWeights;
+            double[,] newTensor = new double[temp.RowCount, temp.ColCount];
+
+            //Run the activation function
+            for (int i = 0; i < temp.RowCount; i++)
             {
-                Neurons[i] = new Neuron(activationFunc, initializationFunction, inputCount);
+                for (int j = 0; j < temp.ColCount; j++)
+                {
+                    newTensor[i, j] = ActivationFunc.Function(temp.Values[i, j]);
+                }
+            }
+            return new Tensor(newTensor);
+        }
+
+        public void ResetWeights(Random rand)
+        {
+            for (int i = 0; i < neuronWeights.RowCount; i++)
+            {
+                for (int j = 0; j < neuronWeights.ColCount; j++)
+                {
+                    neuronWeights[i, j] = DendriteInitialization.GetInitFunction(InitializationFunc).Invoke(ActivationFunc, rand);
+                }
             }
         }
 
-        public double[] Compute(double[] inputs)
+        public void ResetBiases(Random rand)
         {
-            for (int i = 0; i < Neurons.Length; i++)
+            for (int i = 0; i < biasWeights.RowCount; i++)
             {
-                Neurons[i].Compute(inputs);
-            }
-            return Outputs;
-        }
-        public void Initialize(Random Rand)
-        {
-            for (int i = 0; i < Neurons.Length; i++)
-            {
-                Neurons[i].InitializeDendrites(Rand);
+                for (int j = 0; j < biasWeights.ColCount; j++)
+                {
+                    biasWeights[i, j] = DendriteInitialization.GetInitFunction(InitializationFunc).Invoke(ActivationFunc, rand);
+                }
             }
         }
     }

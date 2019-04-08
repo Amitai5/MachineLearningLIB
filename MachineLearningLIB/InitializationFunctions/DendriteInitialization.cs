@@ -9,8 +9,9 @@ namespace MachineLearningLIB.InitializationFunctions
         {
             switch (initializationFunction)
             {
+                case InitializationFunction.One:
+                    return OneInitialization;
                 default:
-                case InitializationFunction.Random:
                     return RandomInitialization;
             }
         }
@@ -18,6 +19,11 @@ namespace MachineLearningLIB.InitializationFunctions
         public static double RandomInitialization(ActivationFunc activationFunc, Random rand)
         {
             return rand.NextDouble(activationFunc.DendriteMinGen, activationFunc.DendriteMaxGen);
+        }
+
+        public static double OneInitialization(ActivationFunc activationFunc, Random rand)
+        {
+            return 1;
         }
     }
 }

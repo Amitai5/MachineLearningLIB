@@ -1,6 +1,5 @@
 ﻿using MachineLearningLIB.ActivationFunctions;
 using MachineLearningLIB.InitializationFunctions;
-using MachineLearningLIB.LearningAlgorithms;
 using MachineLearningLIB.NetworkStructure;
 using System;
 
@@ -25,6 +24,6 @@ namespace MachineLearningLIB.NetworkBuilder
     public interface INeuralNetworkBuilderFinal
     {
         NeuralNetwork Build(Random rand);
-        GeneticNeuralNetwork[] BuildMany(Random rand, int networkCount);
+        //GeneticNeuralNetwork[] BuildMany(Random rand, int networkCount);
     }
 }
