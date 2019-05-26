@@ -23,7 +23,7 @@ namespace MachineLearningLIB.NetworkBuilder
 
         public INeuralNetworkBuilderCreateLayers CreateInputLayer(int inputCount)
         {
-            //BuildingNet = new NeuralNetwork(inputCount, InitializationFunction);
+            BuildingNet = new NeuralNetwork(inputCount, InitializationFunction);
             InputCount = inputCount;
             return this;
         }
@@ -32,7 +32,6 @@ namespace MachineLearningLIB.NetworkBuilder
         {
             InitializationFunction = initializationFunction;
             return this;
-
         }
 
         #region Add Layers

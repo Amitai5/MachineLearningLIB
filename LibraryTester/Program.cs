@@ -1,5 +1,6 @@
 ﻿using MachineLearningLIB.ActivationFunctions;
 using MachineLearningLIB.InitializationFunctions;
+using MachineLearningLIB.NetworkBuilder;
 using MachineLearningLIB.NetworkStructure;
 using System;
 
@@ -15,15 +16,21 @@ namespace LibraryTester
                 //Each column pertains to another set of input data
                 { 1, 1 },
                 { 1, 0 },
+                { 0, 1 },
                 { 0, 0 }
             };
-
-            NeuralLayer layer = new NeuralLayer(new Sigmoid(), InitializationFunction.Random, 2, 1);
-            layer.ResetWeights(new Random());
-            layer.ResetBiases(new Random());
-
             Tensor inputTensor = new Tensor(TestDataInputs);
-            Tensor temp = layer.Compute(inputTensor);
+
+            //Create network
+            NeuralNetwork network = NeuralNetworkBuilder.StartBuild()
+                .SetInitMethod(InitializationFunction.Random)
+                .CreateInputLayer(2)
+                .AddHiddenLayer(2, new Sigmoid())
+                .CreateOutputLayer(1, new Sigmoid())
+                .Build(new Random());
+
+            //Compute network values
+            Tensor output = network.Compute(inputTensor);
         }
     }
 }

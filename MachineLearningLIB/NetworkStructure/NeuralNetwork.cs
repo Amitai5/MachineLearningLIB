@@ -10,11 +10,21 @@ namespace MachineLearningLIB.NetworkStructure
         public List<NeuralLayer> NeuralLayers { get; }
         public InitializationFunction InitializationFunc { get; }
 
-        private NeuralNetwork(int inputCount, InitializationFunction initializationFunction)
+        public NeuralNetwork(int inputCount, InitializationFunction initializationFunction)
         {
             ExpectedInputCount = inputCount;
             NeuralLayers = new List<NeuralLayer>();
             InitializationFunc = initializationFunction;
+        }
+
+        public Tensor Compute(Tensor inputs)
+        {
+            Tensor output = inputs;
+            for (int i = 0; i < NeuralLayers.Count; i++)
+            {
+                output = NeuralLayers[i].Compute(output);
+            }
+            return output;
         }
 
         public void Initialize(Random rand)
